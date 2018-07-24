@@ -10,7 +10,7 @@ import com.thirdparty.dto.FinancierDto;
  *
  */
 @Service
-public interface IFinancierConnector {
+public interface IFinancierConnectorService {
 
 	public FinancierDto getFinancierDto(String financierId);
 

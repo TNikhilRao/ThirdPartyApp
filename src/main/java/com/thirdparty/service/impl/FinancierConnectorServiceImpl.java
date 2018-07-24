@@ -15,7 +15,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.thirdparty.dto.FinancierDto;
 import com.thirdparty.exception.ConnectorException;
 import com.thirdparty.exception.FinancierAppFatalException;
-import com.thirdparty.service.IFinancierConnector;
+import com.thirdparty.service.IFinancierConnectorService;
 import com.thirdparty.util.ResultCode;
 
 /**
@@ -23,7 +23,7 @@ import com.thirdparty.util.ResultCode;
  *
  */
 @Service
-public class FinancierConnectorImpl implements IFinancierConnector {
+public class FinancierConnectorServiceImpl implements IFinancierConnectorService {
 
 	@Autowired
 	RestTemplate restTemplate;
@@ -34,13 +34,12 @@ public class FinancierConnectorImpl implements IFinancierConnector {
 	@Value("${financier.endpoints.retrieve}")
 	private String getFinancierEndpoint;
 
-	private static final Logger logger = LoggerFactory.getLogger(FinancierConnectorImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(FinancierConnectorServiceImpl.class);
 
 	@Override
 	@HystrixCommand(fallbackMethod = "getFinancierDto_Fallback")
 	public FinancierDto getFinancierDto(String financierId) {
 
-		/* ResponseEntity<FinancierResponse> financierResponeEntity = null; */
 		ResponseEntity<FinancierDto> responeEntityDto = null;
 		FinancierDto dto = new FinancierDto();
 		try {
@@ -52,7 +51,7 @@ public class FinancierConnectorImpl implements IFinancierConnector {
 			ResultCode error = ResultCode.FAILURE_CONNECT_FINANCIER_APP;
 			throw new ConnectorException(error.getCode(), error.getStatus(), error.getMessage());
 		}
-		
+
 		if (responeEntityDto.getStatusCode() == HttpStatus.CREATED
 				|| responeEntityDto.getStatusCode() == HttpStatus.OK) {
 			if (responeEntityDto.getBody() != null) {
@@ -65,8 +64,7 @@ public class FinancierConnectorImpl implements IFinancierConnector {
 		return dto;
 
 	}
-	
-	
+
 	public FinancierDto getFinancierDto_Fallback(String financierId) {
 
 		System.out.println("Financer Service is down!!! fallback route enabled...");

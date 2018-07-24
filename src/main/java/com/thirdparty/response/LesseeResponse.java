@@ -18,4 +18,9 @@ public class LesseeResponse extends BaseResponse {
 		this.lesseeDetails = lesseeDetails;
 	}
 
+	@Override
+	public String toString() {
+		return "LesseeResponse [lesseeDetails=" + lesseeDetails + "]";
+	}
+
 }
