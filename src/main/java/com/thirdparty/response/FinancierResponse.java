@@ -20,7 +20,7 @@ public class FinancierResponse extends BaseResponse {
 
 	@Override
 	public String toString() {
-		return "FinancierResponse [financierDto=" + financierDetails + "]";
+		return "FinancierResponse [financierDetails=" + financierDetails + "]";
 	}
 
 }

@@ -17,7 +17,9 @@ public enum ResultCode {
     FAILURE_CONNECT_FINANCIER_APP("500.300", "failure", "Failure connecting to financier-api "),
     FAILURE_CARDS_NOT_FOUND("400.200", "failure", "Financier Not Found"),
     FAILURE_FINANCIER_NOT_FOUND("E0023", "failure", "Financier Not found"),
-    SUCCESS_GET_TRANSACTION_HISTORY("0000", "success", "Customer Transaction History fetched successfully");
+    SUCCESS_GET_TRANSACTION_HISTORY("0000", "success", "Customer Transaction History fetched successfully"),
+	FAILURE_CONNECT_LESSEE_APP("500.300", "failure", "Failure connecting to lessee-api "),
+	FAILURE_LESSEE_NOT_FOUND("E0023", "failure", "Lessee Not found");
 
     private String code;
     private String status;

@@ -16,9 +16,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 @EnableHystrixDashboard
 @EnableCircuitBreaker
-public class ThirdPartyAppApplication {
+public class ThirdPartyApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ThirdPartyAppApplication.class, args);
+		SpringApplication.run(ThirdPartyApp.class, args);
 	}
 }

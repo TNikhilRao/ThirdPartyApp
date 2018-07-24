@@ -14,9 +14,8 @@ import com.thirdparty.dto.FinancierDto;
 import com.thirdparty.dto.LesseeDto;
 import com.thirdparty.response.FinancierResponse;
 import com.thirdparty.response.LesseeResponse;
-import com.thirdparty.service.IFinancierConnector;
-import com.thirdparty.service.IFinancierFeignService;
-import com.thirdparty.service.ILesseeFeignService;
+import com.thirdparty.service.IFinancierConnectorService;
+import com.thirdparty.service.ILesseeConnectorService;
 import com.thirdparty.util.ResultCode;
 
 /**
@@ -29,14 +28,17 @@ public class ThirdPartyController {
 
 	Logger logger = LoggerFactory.getLogger(ThirdPartyController.class);
 
-	@Autowired
+	/*@Autowired
 	IFinancierFeignService financierFeignService;
 
 	@Autowired
-	ILesseeFeignService lesseeFeignService;
+	ILesseeFeignService lesseeFeignService; */
 
 	@Autowired
-	IFinancierConnector financierConnector;
+	IFinancierConnectorService financierConnector;
+
+	@Autowired
+	ILesseeConnectorService lesseeConnector;
 
 	@GetMapping(value = "/financier/{id}/")
 	public ResponseEntity<FinancierResponse> getFinancier(@PathVariable("id") String financierId) {
@@ -69,22 +71,23 @@ public class ThirdPartyController {
 		logger.debug("ThirdPartyController getLessee Started ::");
 		LesseeDto dto = new LesseeDto();
 
-		dto = lesseeFeignService.getLessee(lesseeId);
+		/* dto = lesseeFeignService.getLessee(lesseeId); */
+		dto = lesseeConnector.getLesseeDto(lesseeId);
 		LesseeResponse response = new LesseeResponse();
 
-		if (dto != null) {
+		if (dto.getLesseeId() != null) {
 			response.setCode(ResultCode.SUCCESS.getCode());
 			response.setStatus(ResultCode.SUCCESS.getStatus());
 			response.setMessage(ResultCode.SUCCESS.getMessage());
 			response.setLesseeDetails(dto);
 		} else {
-			response.setCode(ResultCode.FAILURE_FINANCIER_NOT_FOUND.getCode());
-			response.setStatus(ResultCode.FAILURE_FINANCIER_NOT_FOUND.getStatus());
-			response.setMessage(ResultCode.FAILURE_FINANCIER_NOT_FOUND.getMessage());
+			response.setCode(ResultCode.FAILURE_LESSEE_NOT_FOUND.getCode());
+			response.setStatus(ResultCode.FAILURE_LESSEE_NOT_FOUND.getStatus());
+			response.setMessage(ResultCode.FAILURE_LESSEE_NOT_FOUND.getMessage());
 
 		}
 
-		System.out.println("ThirdParty Controller getFinancier response ::" + dto);
+		System.out.println("ThirdParty Controller getLessee response ::" + dto);
 		return new ResponseEntity<LesseeResponse>(response, HttpStatus.OK);
 	}
 
